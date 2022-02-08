@@ -4,9 +4,17 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.can.*;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.PIDBase.PercentageTolerance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -15,6 +23,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
+  	/** Hardware, either Talon could be a Victor */
+	WPI_TalonSRX _leftMaster = new WPI_TalonSRX(2);
+	WPI_TalonSRX _rightMaster = new WPI_TalonSRX(4);
+  WPI_TalonSRX _rightBack = new WPI_TalonSRX(3);
+  WPI_TalonSRX _leftBack = new WPI_TalonSRX(5);
+
+	Joystick _gamepad = new Joystick(0);
+  
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
@@ -74,11 +90,65 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when teleop is enabled. */
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    		/* Ensure motor output is neutral during init */
+		_leftMaster.set(ControlMode.PercentOutput, 0);
+		_rightMaster.set(ControlMode.PercentOutput, 0);
+    _leftBack.set(ControlMode.PercentOutput, 0);
+		_rightBack.set(ControlMode.PercentOutput, 0);
+
+		/* Factory Default all hardware to prevent unexpected behaviour */
+		_leftMaster.configFactoryDefault();
+		_rightMaster.configFactoryDefault();
+    _leftBack.configFactoryDefault();
+		_rightBack.configFactoryDefault();
+		
+		/* Set Neutral mode */
+		_leftMaster.setNeutralMode(NeutralMode.Brake);
+		_rightMaster.setNeutralMode(NeutralMode.Brake);
+    _leftBack.setNeutralMode(NeutralMode.Brake);
+		_rightBack.setNeutralMode(NeutralMode.Brake);
+		
+		/* Configure output direction */
+		_leftMaster.setInverted(true);
+		_rightMaster.setInverted(false);
+    _leftBack.setInverted(false);
+		_rightBack.setInverted(true);
+		
+		System.out.println("This is Arcade Drive using Arbitrary Feed Forward.");
+	}
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+	public void teleopPeriodic() {		
+		/* Gamepad processing */
+		double forward = -1 * _gamepad.getY();
+		double turn = _gamepad.getTwist();		
+		forward = Deadband(forward);
+		turn = Deadband(turn);
+
+		/* Arcade Drive using PercentOutput along with Arbitrary Feed Forward supplied by turn */
+		_leftMaster.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, 0);
+		_rightMaster.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, 0);
+    _leftBack.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, 0);
+    _rightBack.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, 0);
+    System.out.printf("L: %.4f R: %.4f L vel: %f R vel: %f\n", _leftMaster.getMotorOutputPercent(), _rightMaster.getMotorOutputPercent(),
+    _leftMaster.getSelectedSensorVelocity(), _rightMaster.getSelectedSensorVelocity());
+  }
+
+	/** Deadband 5 percent, used on the gamepad */
+	double Deadband(double value) {
+		/* Upper deadband */
+		if (value >= +0.01) 
+			return value;
+		
+		/* Lower deadband */
+		if (value <= -0.01)
+			return value;
+		
+		/* Outside deadband */
+		return 0;
+	}
 
   /** This function is called once when the robot is disabled. */
   @Override
