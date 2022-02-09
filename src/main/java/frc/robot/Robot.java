@@ -11,7 +11,6 @@ import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.PIDBase.PercentageTolerance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -24,12 +23,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
   	/** Hardware, either Talon could be a Victor */
-	WPI_TalonSRX _leftMaster = new WPI_TalonSRX(2);
+	WPI_TalonSRX _leftMaster = new WPI_TalonSRX(3);
 	WPI_TalonSRX _rightMaster = new WPI_TalonSRX(4);
-  WPI_TalonSRX _rightBack = new WPI_TalonSRX(3);
-  WPI_TalonSRX _leftBack = new WPI_TalonSRX(5);
+  WPI_TalonSRX _rightBack = new WPI_TalonSRX(5);
+  WPI_TalonSRX _leftBack = new WPI_TalonSRX(2);
 
-	Joystick _gamepad = new Joystick(0);
+	Joystick controllerLeft = new Joystick(0);
+  Joystick controllerRight = new Joystick(1);
+
   
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
@@ -111,7 +112,7 @@ public class Robot extends TimedRobot {
 		
 		/* Configure output direction */
 		_leftMaster.setInverted(true);
-		_rightMaster.setInverted(false);
+		_rightMaster.setInverted(true);
     _leftBack.setInverted(false);
 		_rightBack.setInverted(true);
 		
@@ -122,16 +123,20 @@ public class Robot extends TimedRobot {
   @Override
 	public void teleopPeriodic() {		
 		/* Gamepad processing */
-		double forward = -1 * _gamepad.getY();
-		double turn = _gamepad.getTwist();		
-		forward = Deadband(forward);
-		turn = Deadband(turn);
+		double forwardLeft = -1 * controllerLeft.getY();
+		double turnLeft = controllerLeft.getTwist();		
+		forwardLeft = Deadband(forwardLeft);
+		turnLeft = Deadband(turnLeft);
 
+    double forwardRight = -1 * controllerRight.getY();
+		double turnRight = controllerRight.getTwist();		
+		forwardRight = Deadband(forwardRight);
+		turnRight = Deadband(turnRight);
 		/* Arcade Drive using PercentOutput along with Arbitrary Feed Forward supplied by turn */
-		_leftMaster.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, 0);
-		_rightMaster.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, 0);
-    _leftBack.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, 0);
-    _rightBack.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, 0);
+		_leftMaster.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
+		_rightMaster.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0);
+    _leftBack.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
+    _rightBack.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0);
     System.out.printf("L: %.4f R: %.4f L vel: %f R vel: %f\n", _leftMaster.getMotorOutputPercent(), _rightMaster.getMotorOutputPercent(),
     _leftMaster.getSelectedSensorVelocity(), _rightMaster.getSelectedSensorVelocity());
   }
@@ -139,11 +144,11 @@ public class Robot extends TimedRobot {
 	/** Deadband 5 percent, used on the gamepad */
 	double Deadband(double value) {
 		/* Upper deadband */
-		if (value >= +0.01) 
+		if (value >= +0.001) 
 			return value;
 		
 		/* Lower deadband */
-		if (value <= -0.01)
+		if (value <= -0.001)
 			return value;
 		
 		/* Outside deadband */
