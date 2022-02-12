@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import frc.robot.sim.PhysicsSim;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -36,6 +38,17 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
+  @Override
+	public void simulationInit() {
+		PhysicsSim.getInstance().addTalonSRX(_leftMaster, 0.75, 4000);
+		PhysicsSim.getInstance().addTalonSRX(_rightMaster, 0.75, 4000);
+	}
+
+	@Override
+	public void simulationPeriodic() {
+		PhysicsSim.getInstance().run();
+	}
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -124,21 +137,13 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {		
 		/* Gamepad processing */
 		double forwardLeft = -1 * controllerLeft.getY();
-		double turnLeft = controllerLeft.getTwist();		
-		forwardLeft = Deadband(forwardLeft);
-		turnLeft = Deadband(turnLeft);
-
     double forwardRight = -1 * controllerRight.getY();
-		double turnRight = controllerRight.getTwist();		
-		forwardRight = Deadband(forwardRight);
-		turnRight = Deadband(turnRight);
+
 		/* Arcade Drive using PercentOutput along with Arbitrary Feed Forward supplied by turn */
 		_leftMaster.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
 		_rightMaster.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0);
     _leftBack.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
     _rightBack.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0);
-    System.out.printf("L: %.4f R: %.4f L vel: %f R vel: %f\n", _leftMaster.getMotorOutputPercent(), _rightMaster.getMotorOutputPercent(),
-    _leftMaster.getSelectedSensorVelocity(), _rightMaster.getSelectedSensorVelocity());
   }
 
 	/** Deadband 5 percent, used on the gamepad */
