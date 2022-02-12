@@ -134,8 +134,8 @@ public class Robot extends TimedRobot {
   @Override
 	public void teleopPeriodic() {		
 		/* Gamepad processing */
-		double forwardLeft = speedValue(controllerLeft.getY());
-    double forwardRight = speedValue(controllerRight.getY());
+		double forwardLeft = controllerLeft.getY();
+    double forwardRight = controllerRight.getY();
 
 		/* Arcade Drive using PercentOutput along with Arbitrary Feed Forward supplied by turn */
 		_leftFront.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
@@ -143,13 +143,13 @@ public class Robot extends TimedRobot {
     _leftBack.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
     _rightBack.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0);
   }
-  public double speedValue(double control){
-    double output = 0.0;
-    control *= -1;
-    double error = control - output;
-    output += error*0.1;
-    return output;
-  }
+  // public double speedValue(double control){
+  //   double output = 0.0;
+  //   control *= -1;
+  //   double error = control - output;
+  //   output += error*0.1;
+  //   return output;
+  // }
   /** This function is called once when the robot is disabled. */
   @Override
   public void disabledInit() {}
