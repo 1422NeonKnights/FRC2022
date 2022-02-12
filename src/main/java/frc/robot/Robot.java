@@ -48,8 +48,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void simulationPeriodic() {
 		PhysicsSim.getInstance().run();
-	}
-
+  }
+ 
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code .
