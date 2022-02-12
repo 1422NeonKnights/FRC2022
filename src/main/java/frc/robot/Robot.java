@@ -25,8 +25,8 @@ import frc.robot.sim.PhysicsSim;
  */
 public class Robot extends TimedRobot {
   	/** Hardware, either Talon could be a Victor */
-	WPI_TalonSRX _leftMaster = new WPI_TalonSRX(3);
-	WPI_TalonSRX _rightMaster = new WPI_TalonSRX(4);
+	WPI_TalonSRX _leftFront = new WPI_TalonSRX(3);
+	WPI_TalonSRX _rightFront= new WPI_TalonSRX(4);
   WPI_TalonSRX _rightBack = new WPI_TalonSRX(5);
   WPI_TalonSRX _leftBack = new WPI_TalonSRX(2);
 
@@ -41,8 +41,8 @@ public class Robot extends TimedRobot {
 
   @Override
 	public void simulationInit() {
-		PhysicsSim.getInstance().addTalonSRX(_leftMaster, 0.75, 4000);
-		PhysicsSim.getInstance().addTalonSRX(_rightMaster, 0.75, 4000);
+		PhysicsSim.getInstance().addTalonSRX(_leftFront, 0.75, 4000);
+		PhysicsSim.getInstance().addTalonSRX(_rightFront, 0.75, 4000);
 	}
 
 	@Override
@@ -106,26 +106,26 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     		/* Ensure motor output is neutral during init */
-		_leftMaster.set(ControlMode.PercentOutput, 0);
-		_rightMaster.set(ControlMode.PercentOutput, 0);
+		_leftFront.set(ControlMode.PercentOutput, 0);
+		_rightFront.set(ControlMode.PercentOutput, 0);
     _leftBack.set(ControlMode.PercentOutput, 0);
 		_rightBack.set(ControlMode.PercentOutput, 0);
 
 		/* Factory Default all hardware to prevent unexpected behaviour */
-		_leftMaster.configFactoryDefault();
-		_rightMaster.configFactoryDefault();
+		_leftFront.configFactoryDefault();
+		_rightFront.configFactoryDefault();
     _leftBack.configFactoryDefault();
 		_rightBack.configFactoryDefault();
 		
 		/* Set Neutral mode */
-		_leftMaster.setNeutralMode(NeutralMode.Brake);
-		_rightMaster.setNeutralMode(NeutralMode.Brake);
+		_leftFront.setNeutralMode(NeutralMode.Brake);
+		_rightFront.setNeutralMode(NeutralMode.Brake);
     _leftBack.setNeutralMode(NeutralMode.Brake);
 		_rightBack.setNeutralMode(NeutralMode.Brake);
 		
 		/* Configure output direction */
-		_leftMaster.setInverted(true);
-		_rightMaster.setInverted(true);
+		_leftFront.setInverted(true);
+		_rightFront.setInverted(true);
     _leftBack.setInverted(false);
 		_rightBack.setInverted(true);
 		
@@ -140,8 +140,8 @@ public class Robot extends TimedRobot {
     double forwardRight = -1 * controllerRight.getY();
 
 		/* Arcade Drive using PercentOutput along with Arbitrary Feed Forward supplied by turn */
-		_leftMaster.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
-		_rightMaster.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0);
+		_leftFront.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
+		_rightFront.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0);
     _leftBack.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
     _rightBack.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0);
   }
