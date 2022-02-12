@@ -30,8 +30,8 @@ public class Robot extends TimedRobot {
   WPI_TalonSRX _rightBack = new WPI_TalonSRX(5);
   WPI_TalonSRX _leftBack = new WPI_TalonSRX(2);
 
-	Joystick controllerLeft = new Joystick(0);
-  Joystick controllerRight = new Joystick(1);
+	Joystick controllerLeft = new Joystick(1);
+  Joystick controllerRight = new Joystick(0);
 
   
   private static final String kDefaultAuto = "Default";
@@ -125,19 +125,17 @@ public class Robot extends TimedRobot {
 		
 		/* Configure output direction */
 		_leftFront.setInverted(true);
-		_rightFront.setInverted(true);
-    _leftBack.setInverted(false);
-		_rightBack.setInverted(true);
-		
-		System.out.println("This is Arcade Drive using Arbitrary Feed Forward.");
+		_rightFront.setInverted(false);
+    _leftBack.setInverted(true);
+		_rightBack.setInverted(false);
 	}
 
   /** This function is called periodically during operator control. */
   @Override
 	public void teleopPeriodic() {		
 		/* Gamepad processing */
-		double forwardLeft = -1 * controllerLeft.getY();
-    double forwardRight = -1 * controllerRight.getY();
+		double forwardLeft = speedValue(controllerLeft.getY());
+    double forwardRight = speedValue(controllerRight.getY());
 
 		/* Arcade Drive using PercentOutput along with Arbitrary Feed Forward supplied by turn */
 		_leftFront.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
@@ -145,21 +143,13 @@ public class Robot extends TimedRobot {
     _leftBack.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
     _rightBack.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0);
   }
-
-	/** Deadband 5 percent, used on the gamepad */
-	double Deadband(double value) {
-		/* Upper deadband */
-		if (value >= +0.001) 
-			return value;
-		
-		/* Lower deadband */
-		if (value <= -0.001)
-			return value;
-		
-		/* Outside deadband */
-		return 0;
-	}
-
+  public double speedValue(double control){
+    double output = 0.0;
+    control *= -1;
+    double error = control - output;
+    output += error*0.1;
+    return output;
+  }
   /** This function is called once when the robot is disabled. */
   @Override
   public void disabledInit() {}
