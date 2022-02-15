@@ -138,10 +138,10 @@ public class Robot extends TimedRobot {
     double forwardRight = controllerRight.getY();
 
 		/* Arcade Drive using PercentOutput along with Arbitrary Feed Forward supplied by turn */
-		_leftFront.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
-		_rightFront.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0);
-    _leftBack.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
-    _rightBack.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0);
+		_leftFront.set(ControlMode.PercentOutput, forwardLeft, DemandType.AuxPID, 0);
+		_rightFront.set(ControlMode.PercentOutput, forwardRight, DemandType.AuxPID, 0);
+    _leftBack.set(ControlMode.PercentOutput, forwardLeft, DemandType.AuxPID, 0);
+    _rightBack.set(ControlMode.PercentOutput, forwardRight, DemandType.AuxPID, 0);
   }
   // public double speedValue(double control){
   //   double output = 0.0;
