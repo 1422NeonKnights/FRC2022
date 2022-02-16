@@ -9,10 +9,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.*;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import java.lang.Math;
 
 import frc.robot.sim.PhysicsSim;
 
@@ -43,6 +45,8 @@ public class Robot extends TimedRobot {
 	public void simulationInit() {
 		PhysicsSim.getInstance().addTalonSRX(_leftFront, 0.75, 4000);
 		PhysicsSim.getInstance().addTalonSRX(_rightFront, 0.75, 4000);
+		PhysicsSim.getInstance().addTalonSRX(_leftBack, 0.75, 4000);
+		PhysicsSim.getInstance().addTalonSRX(_rightBack, 0.75, 4000);
 	}
 
 	@Override
@@ -59,6 +63,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    CameraServer.startAutomaticCapture();
   }
 
   /**
@@ -134,21 +139,28 @@ public class Robot extends TimedRobot {
   @Override
 	public void teleopPeriodic() {		
 		/* Gamepad processing */
-		double forwardLeft = controllerLeft.getY();
-    double forwardRight = controllerRight.getY();
+		double forwardLeft = speedValue(controllerLeft.getY());
+    double forwardRight = speedValue(controllerRight.getY());
 
 		/* Arcade Drive using PercentOutput along with Arbitrary Feed Forward supplied by turn */
-		_leftFront.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
-		_rightFront.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0);
-    _leftBack.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
-    _rightBack.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0);
+		_leftFront.set(ControlMode.PercentOutput, forwardLeft, DemandType.AuxPID, 0);
+		_rightFront.set(ControlMode.PercentOutput, forwardRight, DemandType.AuxPID, 0);
+    _leftBack.set(ControlMode.PercentOutput, forwardLeft, DemandType.AuxPID, 0);
+    _rightBack.set(ControlMode.PercentOutput, forwardRight, DemandType.AuxPID, 0);
+  }
+  double speedValue(double controllerValue){
+    controllerValue *= -1;
+    return Math.pow(2, controllerValue)-1;
   }
   // public double speedValue(double control){
-  //   double output = 0.0;
-  //   control *= -1;
-  //   double error = control - output;
-  //   output += error*0.1;
-  //   return output;
+  //   double base = 2, exponent = control;
+  //   double speed = 1;
+  //   while (exponent != 0){
+  //     speed*=base;
+  //     --control;
+  //   }
+  //   speed -= 2;
+  //   return speed;
   // }
   /** This function is called once when the robot is disabled. */
   @Override
