@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.cameraserver.CameraServer;
@@ -102,7 +105,54 @@ public class Robot extends TimedRobot {
         break;
     }
   }
+
+      
+   /** This function is called once when teleop is enabled. */
+  @Override
+   public void teleopInit() {
+      /* Ensure motor output is neutral during init */
+      _leftFront.set(ControlMode.PercentOutput, 0);
+      _rightFront.set(ControlMode.PercentOutput, 0);
+      _leftBack.set(ControlMode.PercentOutput, 0);
+      _rightBack.set(ControlMode.PercentOutput, 0);
   
+      /* Factory Default all hardware to prevent unexpected behaviour */
+      _leftFront.configFactoryDefault();
+      _rightFront.configFactoryDefault();
+      _leftBack.configFactoryDefault();
+      _rightBack.configFactoryDefault();
+         
+      /* Set Neutral mode */
+      _leftFront.setNeutralMode(NeutralMode.Brake);
+      _rightFront.setNeutralMode(NeutralMode.Brake);
+      _leftBack.setNeutralMode(NeutralMode.Brake);
+      _rightBack.setNeutralMode(NeutralMode.Brake);
+         
+      /* Configure output direction */
+      _leftFront.setInverted(true);
+      _rightFront.setInverted(false);
+      _leftBack.setInverted(true);
+      _rightBack.setInverted(false);
+     }
+      /** This function is called periodically during operator control. */
+    @Override
+    public void teleopPeriodic() {		
+        /* Gamepad processing */
+        double forwardLeft = speedValue(controllerLeft.getY());
+        double forwardRight = speedValue(controllerRight.getY());
+  
+        /* Arcade Drive using PercentOutput along with Arbitrary Feed Forward supplied by turn */
+        _leftFront.set(ControlMode.MotionMagic, forwardLeft, DemandType.AuxPID, 0);
+        _rightFront.set(ControlMode.MotionMagic, forwardRight, DemandType.AuxPID, 0);
+        _leftBack.set(ControlMode.MotionMagic, forwardLeft, DemandType.AuxPID, 0);
+        _rightBack.set(ControlMode.MotionMagic, forwardRight, DemandType.AuxPID, 0);
+      }
+  
+      double speedValue(double controllerValue){
+          controllerValue *= -1;
+          return Math.pow(2, controllerValue)-1;
+      }
+   
  
   /** This function is called once when the robot is disabled. */
   @Override
