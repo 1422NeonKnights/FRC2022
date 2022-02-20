@@ -4,18 +4,12 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.*;
-
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.XboxController;
 
-import frc.robot.sim.PhysicsSim;
 
 
 /**
@@ -26,43 +20,29 @@ import frc.robot.sim.PhysicsSim;
  */
 public class Robot extends TimedRobot {
   	/** Hardware, either Talon could be a Victor */
-	WPI_TalonSRX _leftFront = new WPI_TalonSRX(3);
-	WPI_TalonSRX _rightFront= new WPI_TalonSRX(4);
-  WPI_TalonSRX _rightBack = new WPI_TalonSRX(5);
-  WPI_TalonSRX _leftBack = new WPI_TalonSRX(2);
+  private Drive m_drive;
+  private Controller lController, rController;
+  XboxController xController;
 
-	Joystick controllerLeft = new Joystick(1);
-  Joystick controllerRight = new Joystick(0);
-
-  
-  private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
-
-  @Override
-	public void simulationInit() {
-		PhysicsSim.getInstance().addTalonSRX(_leftFront, 0.75, 4000);
-		PhysicsSim.getInstance().addTalonSRX(_rightFront, 0.75, 4000);
-		PhysicsSim.getInstance().addTalonSRX(_leftBack, 0.75, 4000);
-		PhysicsSim.getInstance().addTalonSRX(_rightBack, 0.75, 4000);
-	}
-
-	@Override
-	public void simulationPeriodic() {
-		PhysicsSim.getInstance().run();
-  }
- 
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code .
    */
   @Override
   public void robotInit() {
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
+    rController = new Controller(0);
+    lController = new Controller(1);
+    xController = new XboxController(2);
+    
+    //init Drive system
+    m_drive = new Drive(lController, rController, xController);
+
+    //init USBcamera
     CameraServer.startAutomaticCapture();
+    if(RobotBase.isReal()){
+      //reduce fps to save network
+      CameraServer.startAutomaticCapture().setFPS(8);
+    }
   }
 
   /**
@@ -87,72 +67,19 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
-  }
-
-  /** This function is called periodically during autonomous. */
-  @Override
-  public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
   }
 
       
    /** This function is called once when teleop is enabled. */
   @Override
-   public void teleopInit() {
-      /* Ensure motor output is neutral during init */
-      _leftFront.set(ControlMode.PercentOutput, 0);
-      _rightFront.set(ControlMode.PercentOutput, 0);
-      _leftBack.set(ControlMode.PercentOutput, 0);
-      _rightBack.set(ControlMode.PercentOutput, 0);
-  
-      /* Factory Default all hardware to prevent unexpected behaviour */
-      _leftFront.configFactoryDefault();
-      _rightFront.configFactoryDefault();
-      _leftBack.configFactoryDefault();
-      _rightBack.configFactoryDefault();
-         
-      /* Set Neutral mode */
-      _leftFront.setNeutralMode(NeutralMode.Brake);
-      _rightFront.setNeutralMode(NeutralMode.Brake);
-      _leftBack.setNeutralMode(NeutralMode.Brake);
-      _rightBack.setNeutralMode(NeutralMode.Brake);
-         
-      /* Configure output direction */
-      _leftFront.setInverted(true);
-      _rightFront.setInverted(false);
-      _leftBack.setInverted(true);
-      _rightBack.setInverted(false);
-     }
-      /** This function is called periodically during operator control. */
-    @Override
-    public void teleopPeriodic() {		
-        /* Gamepad processing */
-        double forwardLeft = speedValue(controllerLeft.getY());
-        double forwardRight = speedValue(controllerRight.getY());
-  
-        /* Arcade Drive using PercentOutput along with Arbitrary Feed Forward supplied by turn */
-        _leftFront.set(ControlMode.MotionMagic, forwardLeft, DemandType.AuxPID, 0);
-        _rightFront.set(ControlMode.MotionMagic, forwardRight, DemandType.AuxPID, 0);
-        _leftBack.set(ControlMode.MotionMagic, forwardLeft, DemandType.AuxPID, 0);
-        _rightBack.set(ControlMode.MotionMagic, forwardRight, DemandType.AuxPID, 0);
-      }
-  
-      double speedValue(double controllerValue){
-          controllerValue *= -1;
-          return Math.pow(2, controllerValue)-1;
-      }
-   
+  public void teleopInit() {
+  }
+  /** This function is called periodically during operator control. */
+  @Override
+  public void teleopPeriodic() {
+    //tank drive		
+    m_drive.tankDrive();
+  }
  
   /** This function is called once when the robot is disabled. */
   @Override
