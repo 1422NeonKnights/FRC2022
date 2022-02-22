@@ -77,6 +77,10 @@ public class Drive {
         _leftBack.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
         _rightBack.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0); 
     }
+    
+    public void Arcade(){
+        
+    }
 
     //Arcade control with one xbox controller
     public void ArcadeXbox(){
@@ -89,7 +93,7 @@ public class Drive {
        if(controllerValue>=0.05){
            return Math.pow(2, Math.abs(controllerValue)-1);
        }
-       if(controllerValue<=0.05){
+       if(controllerValue<=-0.05){
            return -(Math.pow(2, Math.abs(controllerValue)-1));
        }
        return 0;
