@@ -3,15 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
-
-
-
+import frc.robot.Subsystems.Drive;
+import frc.robot.Subsystems.MotorControllers;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -19,23 +15,17 @@ import edu.wpi.first.wpilibj.XboxController;
  * project.
  */
 public class Robot extends TimedRobot {
-  	/** Hardware, either Talon could be a Victor */
-  private Drive m_drive;
-  private Controller lController, rController;
-  XboxController xController;
-
+  Drive _drive = new Drive(
+    MotorControllers._leftFront, 
+    MotorControllers._leftBack, 
+    MotorControllers._rightFront, 
+    MotorControllers._rightBack);
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code .
    */
   @Override
   public void robotInit() {
-    rController = new Controller(0);
-    lController = new Controller(1);
-    xController = new XboxController(2);
-    
-    //init Drive system
-    m_drive = new Drive(lController, rController, xController);
 
     //init USBcamera
     CameraServer.startAutomaticCapture();
@@ -73,15 +63,14 @@ public class Robot extends TimedRobot {
    /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
+    MotorControllers.configureTalons();
   }
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    //make sure talons are configured
-    m_drive.configureTalons();
-    //tank drive		
-    m_drive.tankDrive();
+    _drive.TankDrive();
   }
+
  
   /** This function is called once when the robot is disabled. */
   @Override

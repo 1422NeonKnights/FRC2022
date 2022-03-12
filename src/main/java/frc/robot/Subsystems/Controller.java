@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.Subsystems;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -19,3 +19,4 @@ public class Controller extends Joystick{
         return new JoystickButton(this, BUTTON_TRIGGER_RIGHT);
       }
 }
+
