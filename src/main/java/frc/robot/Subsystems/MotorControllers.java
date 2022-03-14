@@ -10,6 +10,8 @@ public class MotorControllers {
     public static WPI_TalonSRX _leftFront = new WPI_TalonSRX(3);
     public static WPI_TalonSRX _rightFront= new WPI_TalonSRX(4);
     public static WPI_TalonSRX _rightBack = new WPI_TalonSRX(5);
+    public static WPI_TalonSRX _CMain = new WPI_TalonSRX(6);
+    public static WPI_TalonSRX _CControl = new WPI_TalonSRX(7);
 
     public static void configureTalons(){
         /* Ensure motor output is neutral during init */
