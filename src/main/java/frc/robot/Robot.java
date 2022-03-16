@@ -6,8 +6,6 @@ package frc.robot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
-import frc.robot.Subsystems.Drive;
-import frc.robot.Subsystems.MotorControllers;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -19,7 +17,10 @@ public class Robot extends TimedRobot {
     MotorControllers._leftFront, 
     MotorControllers._leftBack, 
     MotorControllers._rightFront, 
-    MotorControllers._rightBack);
+    MotorControllers._rightBack,
+    MotorControllers._CMain,
+    MotorControllers._CControl,
+    MotorControllers._intake);
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code .
@@ -69,6 +70,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     _drive.TankDrive();
+    _drive.CShooter();
   }
 
  

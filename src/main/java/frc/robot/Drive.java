@@ -1,4 +1,4 @@
-package frc.robot.Subsystems;
+package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
@@ -13,16 +13,30 @@ public class Drive {
     WPI_TalonSRX _leftFront;
     WPI_TalonSRX _rightFront;
     WPI_TalonSRX _rightBack;
+    WPI_TalonSRX _CMain;
+    WPI_TalonSRX _CControl;
+    WPI_TalonSRX _intake;
     
     /** Hardware, either Talon could be a Victor */
-    public Joystick controllerLeft = new Joystick(0);
-    public Joystick controllerRight = new Joystick(1);
-    XboxController xController;
-    public Drive(WPI_TalonSRX leftFront, WPI_TalonSRX leftBack, WPI_TalonSRX rightFront, WPI_TalonSRX rightBack){
+    public Joystick controllerRight = new Joystick(0);
+    public Joystick controllerLeft = new Joystick(1);
+    public XboxController shooterCOntroller = new XboxController(2);
+
+    public Drive(WPI_TalonSRX leftFront, 
+                    WPI_TalonSRX leftBack, 
+                    WPI_TalonSRX rightFront, 
+                    WPI_TalonSRX rightBack,
+                    WPI_TalonSRX CMain,
+                    WPI_TalonSRX CControl,
+                    WPI_TalonSRX intake){
+
         this._leftBack = leftBack;
         this._leftFront = leftFront;
         this._rightBack = rightBack;
         this._rightFront = rightFront;
+        this._CMain = CMain;
+        this._CControl = CControl;
+        this._intake = intake;
     }
     
     public void TankDrive(){
@@ -30,13 +44,23 @@ public class Drive {
       double forwardLeft =speedLimit(speedValue(controllerLeft.getY()), DriveConstants.MAX_SPEED);
       double forwardRight = speedLimit(speedValue(controllerRight.getY()), DriveConstants.MAX_SPEED);
 
-      /* Arcade Drive using PercentOutput along with Arbitrary Feed Forward supplied by turn */
       _leftFront.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
       _rightFront.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0);
       _leftBack.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
       _rightBack.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0); 
+    }
 
-      speedCheck();
+    public void CShooter(){
+        boolean CMainShoot = shooterCOntroller.getAButtonPressed();
+        boolean CControlShoot = shooterCOntroller.getBButtonPressed();
+
+        if(CMainShoot){
+            _CMain.set(ControlMode.PercentOutput, DriveConstants.MAIN_SHOOTER_SPEED);
+        }
+        if(CControlShoot){
+            _CControl.set(ControlMode.PercentOutput, DriveConstants.CONTROL_SHOOTER_SPEED);
+        }
+        
     }
 
     //speed value algorithm exponential base 2
@@ -51,10 +75,5 @@ public class Drive {
       }else{
           return speed;
       }
-    }
-
-    private void speedCheck(){
-        System.out.printf("L: %.4f R: %.4f L vel: %f R vel: %f\n", _leftFront.getMotorOutputPercent(), _rightFront.getMotorOutputPercent(),
-                                _leftFront.getSelectedSensorVelocity(), _rightFront.getSelectedSensorVelocity());
     }
 }
