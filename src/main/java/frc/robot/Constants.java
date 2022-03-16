@@ -3,8 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
-<<<<<<< HEAD
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -23,16 +21,6 @@ public final class Constants {
     //Joysticks tank dirve
     public static final int CONTROLLER_LEFT = 0;
     public static final int CONTROLLER_RIGHT = 1;
-=======
-public class Constants {
-    public static final class DriveConstants{
-        //percent
-        public static final double MAX_SPEED = 0.78;
-        //
-        public static final double MAIN_SHOOTER_SPEED = 0.9;
-        public static final double CONTROL_SHOOTER_SPEED = 0.9;
-    }
->>>>>>> 7756451196ba7ff72932347de20d47faaef17a37
     
     //Joysticks arcade drive
     public static final int DRIVER_CONTROLLER = 0;
