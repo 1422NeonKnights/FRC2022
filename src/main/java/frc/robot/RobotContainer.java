@@ -25,8 +25,8 @@ public class RobotContainer {
 
   //Joysticks
   public static Joystick driverController = new Joystick(Constants.DRIVER_CONTROLLER);//0
-  public Joystick controllerLeft = new Joystick(Constants.CONTROLLER_LEFT);   //0
-  public Joystick controllerRight = new Joystick(Constants.CONTROLLER_RIGHT); //1
+  public static Joystick controllerLeft = new Joystick(Constants.CONTROLLER_LEFT);   //0
+  public static Joystick controllerRight = new Joystick(Constants.CONTROLLER_RIGHT); //1
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -41,7 +41,6 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {}
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

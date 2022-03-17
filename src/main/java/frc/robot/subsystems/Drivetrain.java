@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -14,10 +17,10 @@ import frc.robot.Constants;
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
   //motorcontrollers
-  WPI_TalonSRX _leftBack;
-  WPI_TalonSRX _leftFront;
-  WPI_TalonSRX _rightFront;
-  WPI_TalonSRX _rightBack;
+  static WPI_TalonSRX _leftBack;
+  static WPI_TalonSRX _leftFront;
+  static WPI_TalonSRX _rightFront;
+  static WPI_TalonSRX _rightBack;
 
   MotorControllerGroup leftMotors;
   MotorControllerGroup rightMotors;
@@ -36,8 +39,46 @@ public class Drivetrain extends SubsystemBase {
     differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
   }
 
+  public static void configureTalons(){
+            /* Ensure motor output is neutral during init */
+            _leftFront.set(ControlMode.PercentOutput, 0);
+            _rightFront.set(ControlMode.PercentOutput, 0);
+            _leftBack.set(ControlMode.PercentOutput, 0);
+            _rightBack.set(ControlMode.PercentOutput, 0);
+                    
+            /* Factory Default all hardware to prevent unexpected behaviour */
+            _leftFront.configFactoryDefault();
+            _rightFront.configFactoryDefault();
+            _leftBack.configFactoryDefault();
+            _rightBack.configFactoryDefault();
+                            
+            /* Set Neutral mode */
+            _leftFront.setNeutralMode(NeutralMode.Brake);
+            _rightFront.setNeutralMode(NeutralMode.Brake);
+            _leftBack.setNeutralMode(NeutralMode.Brake);
+            _rightBack.setNeutralMode(NeutralMode.Brake);
+                            
+            /* Configure output direction */
+            _leftFront.setInverted(true);
+            _rightFront.setInverted(false);
+            _leftBack.setInverted(true);
+            _rightBack.setInverted(false);
+  }
+
   public void arcadeDrive(double moveSpeed, double rotateSpeed){
     differentialDrive.arcadeDrive(moveSpeed, rotateSpeed);
+  }
+  
+  public void tankDrive(double moveSpeedRight, double moveSpeedLeft){
+      /* Gamepad processing */
+      double forwardLeft = moveSpeedRight;
+      double forwardRight = moveSpeedLeft;
+
+      /* Arcade Drive using PercentOutput along with Arbitrary Feed Forward supplied by turn */
+      _leftFront.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
+      _rightFront.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0);
+      _leftBack.set(ControlMode.PercentOutput, forwardLeft, DemandType.ArbitraryFeedForward, 0);
+      _rightBack.set(ControlMode.PercentOutput, forwardRight, DemandType.ArbitraryFeedForward, 0); 
   }
   @Override
   public void periodic() {
