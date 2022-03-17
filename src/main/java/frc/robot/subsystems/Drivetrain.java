@@ -21,11 +21,10 @@ public class Drivetrain extends SubsystemBase {
   static WPI_TalonSRX _rightFollow;
   
 //TODO: test PID control
-  // PID values
-  // private double kP = 0.15 * 0.75;
-  // private double kI = 0.002 * 0;
-  // private double kD = 0.0;
-  // private double kF = 0.052;
+  private double kP = 0.15 * 0.75;
+  private double kI = 0.002 * 0;
+  private double kD = 0.0;
+  private double kF = 0.052;
 
   //motorcontroller groups
   MotorControllerGroup leftMotors;
@@ -54,12 +53,12 @@ public class Drivetrain extends SubsystemBase {
 
   //using two controllers
   public void tankDrive(double moveSpeedRight, double moveSpeedLeft){
-    differentialDrive.tankDrive(moveSpeedLeft, moveSpeedRight);
+    differentialDrive.tankDrive(-moveSpeedLeft, -moveSpeedRight);
   }
 
   //using only one controller
   public void arcadeDrive(double moveSpeed, double rotateSpeed){
-    differentialDrive.arcadeDrive(moveSpeed, rotateSpeed);
+    differentialDrive.arcadeDrive(-moveSpeed, -rotateSpeed);
   }
   
   @Override
@@ -91,17 +90,16 @@ public class Drivetrain extends SubsystemBase {
     _rightFollow.follow(_rightLead);
 
 //TODO: test PID control
-    // Add PID constants
-    // _leftLead.config_kP(0, kP);
-    // _leftLead.config_kI(0, kI);
-    // _leftLead.config_kD(0, kD);
-    // _leftLead.config_kF(0, kF);
-    // _leftLead.configMaxIntegralAccumulator(0, 8000);
+    _leftLead.config_kP(0, kP);
+    _leftLead.config_kI(0, kI);
+    _leftLead.config_kD(0, kD);
+    _leftLead.config_kF(0, kF);
+    _leftLead.configMaxIntegralAccumulator(0, 8000);
     
-    // _rightLead.config_kP(0, kP);
-    // _rightLead.config_kI(0, kI);
-    // _rightLead.config_kD(0, kD);
-    // _rightLead.config_kF(0, kF);
-    // _rightLead.configMaxIntegralAccumulator(0, 8000);
+    _rightLead.config_kP(0, kP);
+    _rightLead.config_kI(0, kI);
+    _rightLead.config_kD(0, kD);
+    _rightLead.config_kF(0, kF);
+    _rightLead.configMaxIntegralAccumulator(0, 8000);
   }
 }
