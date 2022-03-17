@@ -21,9 +21,4 @@ public final class Constants {
     //Joysticks tank dirve
     public static final int CONTROLLER_LEFT = 0;
     public static final int CONTROLLER_RIGHT = 1;
-    
-    //Joysticks arcade drive
-    public static final int DRIVER_CONTROLLER = 0;
-    public static final int DRIVER_CONTROLLER_MOVE_AXIS = 1;
-    public static final int DRIVER_CONTROLLER_ROTATE_AXIS = 2;
 }

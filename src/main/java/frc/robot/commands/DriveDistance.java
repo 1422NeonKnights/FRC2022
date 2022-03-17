@@ -5,30 +5,25 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.Robot;
 
-public class TankDrive extends CommandBase {
-  /** Creates a new TankDrive. */
-  public TankDrive() {
+public class DriveDistance extends CommandBase {
+  double distance;
+  /** Creates a new DriveDistance. */
+  public DriveDistance(double inches) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_drivetrain);
+    addRequirements(Robot.m_drivetrain);
+    distance = inches;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    
-    double moveSpeedLeft = RobotContainer.controllerLeft.getY();
-    double moveSpeedRight = RobotContainer.controllerRight.getY();
-
-    RobotContainer.m_drivetrain.tankDrive(moveSpeedRight, moveSpeedLeft);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
@@ -39,6 +34,4 @@ public class TankDrive extends CommandBase {
   public boolean isFinished() {
     return false;
   }
-
-  //exponential increase of speed
 }
