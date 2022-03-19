@@ -20,7 +20,7 @@ public class Drivetrain extends SubsystemBase {
   static WPI_TalonSRX _rightLead;
   static WPI_TalonSRX _rightFollow;
   
-//TODO: test PID control
+//TODO: test PID controll
   private double kP = 0.15 * 0.75;
   private double kI = 0.002 * 0;
   private double kD = 0.0;
