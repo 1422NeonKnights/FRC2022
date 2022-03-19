@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.TankDrive;
+//import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -36,6 +36,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     //set default drive system
+    //m_drivetrain.setDefaultCommand(new TankDrive());
     m_drivetrain.setDefaultCommand(new ArcadeDrive());
   }
 
