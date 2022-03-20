@@ -10,21 +10,15 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
   //motorcontrollers
-  static WPI_TalonSRX _leftFollow;
-  static WPI_TalonSRX _leftLead;
-  static WPI_TalonSRX _rightLead;
-  static WPI_TalonSRX _rightFollow;
-  
-//TODO: test PID control
-  private double kP = 0.15 * 0.75;
-  private double kI = 0.002 * 0;
-  private double kD = 0.0;
-  private double kF = 0.052;
+  WPI_TalonSRX _leftFollow;
+  WPI_TalonSRX _leftLead;
+  WPI_TalonSRX _rightLead;
+  WPI_TalonSRX _rightFollow;
 
   //motorcontroller groups
   MotorControllerGroup leftMotors;
@@ -37,8 +31,12 @@ public class Drivetrain extends SubsystemBase {
     
     configureMotors();
 
+    //group motors
+    leftMotors = new MotorControllerGroup(_leftLead, _leftFollow);
+    rightMotors = new MotorControllerGroup(_rightLead, _rightFollow);
+
     //differenctial drive
-    differentialDrive = new DifferentialDrive(_leftLead, _rightLead);
+    differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
   }
 
   //using two controllers
@@ -57,11 +55,10 @@ public class Drivetrain extends SubsystemBase {
   }
   public void configureMotors(){
      //create motorcontrollers
-     _leftFollow = new WPI_TalonSRX(Constants.DRIVETRAIN_LEFT_BACK_TALON);  //2 dont ask me why it isnt 0
-     _leftLead = new WPI_TalonSRX(Constants.DRIVETRAIN_LEFT_FRONT_TALON);   //3
-     _rightLead = new WPI_TalonSRX(Constants.DRIVETRAIN_RIGHT_FRONT_TALON); //4 
-     _rightFollow = new WPI_TalonSRX(Constants.DRIVETRAIN_RIGHT_BACK_TALON);//5
-     
+     _leftFollow = new WPI_TalonSRX(DriveConstants.DRIVETRAIN_LEFT_BACK_TALON);  //2 dont ask me why it isnt 0
+     _leftLead = new WPI_TalonSRX(DriveConstants.DRIVETRAIN_LEFT_FRONT_TALON);   //3
+     _rightLead = new WPI_TalonSRX(DriveConstants.DRIVETRAIN_RIGHT_FRONT_TALON); //4 
+     _rightFollow = new WPI_TalonSRX(DriveConstants.DRIVETRAIN_RIGHT_BACK_TALON);//5
     
      /* Factory Default all hardware to prevent unexpected behaviour */
      _leftLead.configFactoryDefault();
@@ -81,19 +78,29 @@ public class Drivetrain extends SubsystemBase {
      _leftFollow.setInverted(true);
      _rightFollow.setInverted(false);
  
-     _leftFollow.follow(_leftLead);
-     _rightFollow.follow(_rightLead);
- 
-     _leftLead.config_kP(0, kP);
-     _leftLead.config_kI(0, kI);
-     _leftLead.config_kD(0, kD);
-     _leftLead.config_kF(0, kF);
+     //configure PIDF values
+     _leftLead.config_kP(0, DriveConstants.kP);
+     _leftLead.config_kI(0, DriveConstants.kI);
+     _leftLead.config_kD(0, DriveConstants.kD);
+     _leftLead.config_kF(0, DriveConstants.kF);
      _leftLead.configMaxIntegralAccumulator(0, 8000);
      
-     _rightLead.config_kP(0, kP);
-     _rightLead.config_kI(0, kI);
-     _rightLead.config_kD(0, kD);
-     _rightLead.config_kF(0, kF);
+     _rightLead.config_kP(0, DriveConstants.kP);
+     _rightLead.config_kI(0, DriveConstants.kI);
+     _rightLead.config_kD(0, DriveConstants.kD);
+     _rightLead.config_kF(0, DriveConstants.kF);
      _rightLead.configMaxIntegralAccumulator(0, 8000);
+
+     _leftFollow.config_kP(0, DriveConstants.kP);
+     _leftFollow.config_kI(0, DriveConstants.kI);
+     _leftFollow.config_kD(0, DriveConstants.kD);
+     _leftFollow.config_kF(0, DriveConstants.kF);
+     _leftFollow.configMaxIntegralAccumulator(0, 8000);
+     
+     _rightFollow.config_kP(0, DriveConstants.kP);
+     _rightFollow.config_kI(0, DriveConstants.kI);
+     _rightFollow.config_kD(0, DriveConstants.kD);
+     _rightFollow.config_kF(0, DriveConstants.kF);
+     _rightFollow.configMaxIntegralAccumulator(0, 8000);
   }
 }

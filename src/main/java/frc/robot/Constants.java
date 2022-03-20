@@ -12,13 +12,47 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    //Motorcontroller numbers
-    public static final int DRIVETRAIN_LEFT_BACK_TALON = 2;
-    public static final int DRIVETRAIN_LEFT_FRONT_TALON = 3;
-    public static final int DRIVETRAIN_RIGHT_FRONT_TALON = 4;
-    public static final int DRIVETRAIN_RIGHT_BACK_TALON = 5;
+    public class DriveConstants {
+        //Drive Motors
+        public static final int DRIVETRAIN_LEFT_BACK_TALON = 2;
+        public static final int DRIVETRAIN_LEFT_FRONT_TALON = 3; //3
+        public static final int DRIVETRAIN_RIGHT_FRONT_TALON = 4; //4
+        public static final int DRIVETRAIN_RIGHT_BACK_TALON = 5;
+        
+        //Drive PIDF
+        public static final double kP = 0.1125;
+        public static final double kI = 0.0001;
+        public static final double kD = 0.00;
+        public static final double kF = 0.052;
+    }
 
-    //Joysticks tank dirve
-    public static final int CONTROLLER_LEFT = 0;
-    public static final int CONTROLLER_RIGHT = 1;
+    public class ShooterConstants{
+        //CShooter Motors
+        public static final int C_SHOOTER_CONTROL_TALON = 6;
+        public static final int C_SHOOTER_MAIN_TALON = 7;
+
+        //CMain PIDF
+        public static final double targetVelocity = 4000;
+        public static final double C_kP = 0.175;
+        public static final double C_kI = 0.0002;
+        public static final double C_kD = 0;
+        public static final double C_kF = 12/6052 * targetVelocity;
+
+        //CControl PIDF
+        public static final double M_targetVelocity = 2000; //TBD
+        public static final double M_kP = 0.155;
+        public static final double M_kI = 0.0001;
+        public static final double M_kD = 0;
+        public static final double M_kF = 11/6000 * M_targetVelocity;
+    }
+
+    public class ControllerConstants{
+        //Joysticks drive
+        public static final int CONTROLLER_LEFT = 0;
+        public static final int CONTROLLER_RIGHT = 1;
+
+        //Xboxcontroller
+        public static final int XBOX_CONTROLLER = 2;
+    }
+
 }

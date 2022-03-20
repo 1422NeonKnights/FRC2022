@@ -9,9 +9,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.Shoot;
 //import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -22,12 +25,16 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   Command command;
-  // The robot's subsystems and commands are defined here...
+  // Subsystems
   public static final Drivetrain m_drivetrain = new Drivetrain();
+  public static final Shooter m_shooter = new Shooter();
 
   //Joysticks
-  public static Joystick controllerLeft = new Joystick(Constants.CONTROLLER_LEFT);   //0
-  public static Joystick controllerRight = new Joystick(Constants.CONTROLLER_RIGHT); //1
+  public static Joystick controllerLeft = new Joystick(ControllerConstants.CONTROLLER_LEFT);   //0
+  public static Joystick controllerRight = new Joystick(ControllerConstants.CONTROLLER_RIGHT); //1
+
+  //XBox Controller
+  public static XboxController XboxControl = new XboxController(ControllerConstants.XBOX_CONTROLLER); //2
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -35,9 +42,10 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    //set default drive system
+    //TODO: set default drive system
     //m_drivetrain.setDefaultCommand(new TankDrive());
     m_drivetrain.setDefaultCommand(new ArcadeDrive());
+    m_shooter.setDefaultCommand(new Shoot());
   }
 
   /**
@@ -46,7 +54,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
