@@ -34,14 +34,14 @@ public final class Constants {
         //CMain PIDF
         public static final double targetVelocity = 4000;
         public static final double C_kP = 0.175;
-        public static final double C_kI = 0.0002;
+        public static final double C_kI = 0.00;
         public static final double C_kD = 0;
         public static final double C_kF = 12/6052 * targetVelocity;
 
         //CControl PIDF
         public static final double M_targetVelocity = 2000; //TBD
         public static final double M_kP = 0.155;
-        public static final double M_kI = 0.0001;
+        public static final double M_kI = 0.00;
         public static final double M_kD = 0;
         public static final double M_kF = 11/6000 * M_targetVelocity;
     }
@@ -53,6 +53,10 @@ public final class Constants {
 
         //Xboxcontroller
         public static final int XBOX_CONTROLLER = 2;
+    }
+
+    public class UtilConstants{
+        public static final int CAMERA_FPS = 8;
     }
 
 }
