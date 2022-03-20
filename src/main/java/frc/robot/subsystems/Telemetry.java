@@ -3,12 +3,20 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.commands.Shoot;
 
 public class Telemetry extends CommandBase {
   /** Creates a new Telemetry. */
   public Telemetry() {
     // Use addRequirements() here to declare subsystem dependencies.
+    SmartDashboard.putData("Shooter Speed", new Shooter());
+    SmartDashboard.putData("Shooter Control", new Shoot());
+  }
+
+  public void update(){
+    
   }
 
   // Called when the command is initially scheduled.

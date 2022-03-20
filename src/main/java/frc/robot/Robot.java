@@ -5,11 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.UtilConstants;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Telemetry;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -18,7 +19,10 @@ import frc.robot.subsystems.Drivetrain;
  */
 public class Robot extends TimedRobot {
   public static final Drivetrain m_drivetrain = new Drivetrain();
+  
   private Command m_autonomousCommand;
+  
+  public static Telemetry m_telemetry;
 
   private RobotContainer m_robotContainer;
 
@@ -30,13 +34,11 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    m_telemetry = new Telemetry();//must be before every subsystem
+
     m_robotContainer = new RobotContainer();
        //init USBcamera
-       CameraServer.startAutomaticCapture();
-       if(RobotBase.isReal()){
-         //reduce fps to save network
-         CameraServer.startAutomaticCapture().setFPS(8);
-       }
+       CameraServer.startAutomaticCapture().setFPS(UtilConstants.CAMERA_FPS);
   }
 
   /**
@@ -60,7 +62,9 @@ public class Robot extends TimedRobot {
   public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    Robot.m_telemetry.update();
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -75,7 +79,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    Robot.m_telemetry.update();
+  }
 
   @Override
   public void teleopInit() {
@@ -90,7 +96,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    Robot.m_telemetry.update();
+  }
 
   @Override
   public void testInit() {
