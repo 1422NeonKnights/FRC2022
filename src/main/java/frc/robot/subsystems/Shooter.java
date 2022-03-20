@@ -16,19 +16,7 @@ public class Shooter extends SubsystemBase {
   WPI_TalonSRX CMain;
   /** Creates a new Shooter. */
   public Shooter() {
-    CControl = new WPI_TalonSRX(ShooterConstants.C_SHOOTER_CONTROL_TALON);
-    CMain = new WPI_TalonSRX(ShooterConstants.C_SHOOTER_MAIN_TALON);
-
-    CMain.config_kP(0, ShooterConstants.C_kP);
-    CMain.config_kI(0, ShooterConstants.C_kI);
-    CMain.config_kD(0, ShooterConstants.C_kD);
-    CMain.config_kF(0, ShooterConstants.C_kF);
-
-    CControl.config_kP(0, ShooterConstants.M_kP);
-    CControl.config_kI(0, ShooterConstants.M_kI);
-    CControl.config_kD(0, ShooterConstants.M_kD);
-    CControl.config_kF(0, ShooterConstants.M_kF);
-
+    configureTalons();
   }
 
   public void shoot(double targetVelocity, double M_targetVelocity, boolean isPressed) {
@@ -45,6 +33,32 @@ public class Shooter extends SubsystemBase {
 
   public void stop() {
     CMain.set(0);
+  }
+
+  //configure Talons
+  public void configureTalons(){
+    //TODO: Use CAN ids
+    CControl = new WPI_TalonSRX(ShooterConstants.C_SHOOTER_CONTROL_TALON); //6
+    CMain = new WPI_TalonSRX(ShooterConstants.C_SHOOTER_MAIN_TALON);       //7
+
+    CControl.configFactoryDefault();
+    CMain.configFactoryDefault();
+
+    //TODO:check motor inversion
+    // CControl.setInverted(true);
+    // CMain.setInverted(true);
+
+    //PIDF Values
+    //CMain
+    CMain.config_kP(0, ShooterConstants.C_kP);
+    CMain.config_kI(0, ShooterConstants.C_kI);
+    CMain.config_kD(0, ShooterConstants.C_kD);
+    CMain.config_kF(0, ShooterConstants.C_kF);
+    //CControl
+    CControl.config_kP(0, ShooterConstants.M_kP);
+    CControl.config_kI(0, ShooterConstants.M_kI);
+    CControl.config_kD(0, ShooterConstants.M_kD);
+    CControl.config_kF(0, ShooterConstants.M_kF);
   }
 
   @Override
