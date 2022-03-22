@@ -28,8 +28,8 @@ public final class Constants {
 
     public class ShooterConstants{
         //CShooter Motors
-        public static final int C_SHOOTER_CONTROL_TALON = 6;
-        public static final int C_SHOOTER_MAIN_TALON = 7;
+        public static final int C_SHOOTER_CONTROL_TALON = 7;
+        public static final int C_SHOOTER_MAIN_TALON = 8;
 
         //CMain PIDF
         public static final double targetVelocity = 4000;
