@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
-  //toggle aglo
-  private boolean toggle = false;
   //define shooter motor controllers
   WPI_TalonSRX CControl;
   WPI_TalonSRX CMain;
@@ -26,13 +24,9 @@ public class Shooter extends SubsystemBase {
     double targetVelocityInTicks = targetVelocity * 2048.0 / 600.0;
     double M_targetVelocityInTicks = M_targetVelocity * 2048.0 / 600.0;
     //if button is pressed
-    if(isPressed && !toggle){
+    if(isPressed){
       CMain.set(ControlMode.Velocity, targetVelocityInTicks);
       CControl.set(ControlMode.Velocity, M_targetVelocityInTicks);
-      toggle = true;
-    }
-    if(isPressed && toggle){
-      toggle = false;
     }
   }
 
