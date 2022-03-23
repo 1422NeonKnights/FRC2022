@@ -41,17 +41,26 @@ public class Drivetrain extends SubsystemBase {
 
   //using two controllers
   public void tankDrive(double moveSpeedRight, double moveSpeedLeft){
-    differentialDrive.tankDrive(-moveSpeedLeft, -moveSpeedRight);
+    differentialDrive.tankDrive(speedCheck(moveSpeedLeft), 
+                                speedCheck(moveSpeedRight));
   }
 
   //using only one controller
   public void arcadeDrive(double moveSpeed, double rotateSpeed){
-    differentialDrive.arcadeDrive(moveSpeed, rotateSpeed);
+    differentialDrive.arcadeDrive(speedCheck(moveSpeed), rotateSpeed);
   }
   
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public double speedCheck(double speed){
+    if(speed >= DriveConstants.MAX_SPEED){
+      return DriveConstants.MAX_SPEED;
+    }else{
+      return speed;
+    }
   }
   public void configureMotors(){
      //create motorcontrollers
