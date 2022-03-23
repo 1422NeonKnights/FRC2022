@@ -18,6 +18,9 @@ public final class Constants {
         public static final int DRIVETRAIN_LEFT_FRONT_TALON = 3; //3
         public static final int DRIVETRAIN_RIGHT_FRONT_TALON = 4; //4
         public static final int DRIVETRAIN_RIGHT_BACK_TALON = 5;
+
+        //Speed in percentage
+        public static final double MAX_SPEED = 0.87;
         
         //Drive PIDF
         public static final double kP = 0.1125;
