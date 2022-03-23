@@ -62,16 +62,11 @@ public class Shooter extends SubsystemBase {
 
   //configure Talons
   public void configureTalons(){
-    //TODO: Use CAN ids
     CControl = new WPI_TalonSRX(ShooterConstants.C_SHOOTER_CONTROL_TALON); //6
     CMain = new WPI_TalonSRX(ShooterConstants.C_SHOOTER_MAIN_TALON);       //7
 
     CControl.configFactoryDefault();
     CMain.configFactoryDefault();
-
-    //TODO:check motor inversion
-    // CControl.setInverted(true);
-    // CMain.setInverted(true);
 
     //PIDF Values
     //CMain
