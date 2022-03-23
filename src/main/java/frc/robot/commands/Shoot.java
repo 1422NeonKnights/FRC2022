@@ -24,10 +24,8 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    boolean isPressed = RobotContainer.XboxControl.getAButtonPressed();
     shooter.shoot(ShooterConstants.targetVelocity,   //CMain
-                  ShooterConstants.M_targetVelocity,
-                  isPressed);//In RPM
+                  ShooterConstants.M_targetVelocity);//In RPM
   }
 
   // Called once the command ends or is interrupted.
