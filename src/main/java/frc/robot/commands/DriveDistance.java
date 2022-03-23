@@ -5,14 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
+import frc.robot.RobotContainer;
 
 public class DriveDistance extends CommandBase {
   double distance;
   /** Creates a new DriveDistance. */
   public DriveDistance(double inches) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.m_drivetrain);
+    addRequirements(RobotContainer.m_drivetrain);
     distance = inches;
   }
 
