@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Shoot;
-//import frc.robot.commands.TankDrive;
+import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -43,8 +43,8 @@ public class RobotContainer {
     configureButtonBindings();
 
     //TODO: set default drive system
-    //m_drivetrain.setDefaultCommand(new TankDrive());
-    m_drivetrain.setDefaultCommand(new ArcadeDrive());
+    m_drivetrain.setDefaultCommand(new TankDrive());
+    //m_drivetrain.setDefaultCommand(new ArcadeDrive());
     m_shooter.setDefaultCommand(new Shoot());
   }
 
