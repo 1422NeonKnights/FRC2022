@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.IntakeRoll;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.Drivetrain;
@@ -52,6 +53,7 @@ public class RobotContainer {
       System.exit(0);
     }
     m_shooter.setDefaultCommand(new Shoot());
+    m_intake.setDefaultCommand(new IntakeRoll());
   }
 
   /**
