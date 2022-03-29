@@ -13,7 +13,6 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.IntakeRoll;
 import frc.robot.commands.Shoot;
-import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -44,14 +43,8 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    if(controllerLeft.isConnected() && controllerRight.isConnected()){
-      m_drivetrain.setDefaultCommand(new TankDrive());
-    }else if(controllerLeft.isConnected() && !controllerRight.isConnected()){
-      m_drivetrain.setDefaultCommand(new ArcadeDrive());
-    }else{
-      System.out.print("no controllers");
-      System.exit(0);
-    }
+    m_drivetrain.setDefaultCommand(new ArcadeDrive());
+
     m_shooter.setDefaultCommand(new Shoot());
     m_intake.setDefaultCommand(new IntakeRoll());
   }

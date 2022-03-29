@@ -51,10 +51,10 @@ public final class Constants {
 
     public class IntakeConstants{
         //Talon id
-        public static final int INTAKEMAIN = 9;
+        public static final int INTAKEMAIN = 11;
 
         //speed
-        public static final double speedPercent = 0.87;
+        public static final double speedPercent = 1;
 
         //PIDF
         public static final double C_kP = 0.175;

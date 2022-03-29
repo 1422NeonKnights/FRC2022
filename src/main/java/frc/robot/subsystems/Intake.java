@@ -22,10 +22,10 @@ public class Intake extends SubsystemBase {
   }
 
   public void IntakeRoll(double percent){
-    if(RobotContainer.XboxControl.getBButtonPressed()){
+    if(RobotContainer.XboxControl.getYButtonPressed()){
       intakeMotor.set(ControlMode.PercentOutput, percent);
     }
-    if(RobotContainer.XboxControl.getBButtonReleased()){
+    if(RobotContainer.XboxControl.getYButtonReleased()){
       //set motor output to 0
       stop();
     }

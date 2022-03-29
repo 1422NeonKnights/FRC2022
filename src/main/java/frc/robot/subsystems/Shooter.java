@@ -35,12 +35,24 @@ public class Shooter extends SubsystemBase {
 
     if(RobotContainer.XboxControl.getAButtonPressed()){
       CMain.set(ControlMode.Velocity, targetVelocityInTicks);
-      CControl.set(ControlMode.Velocity, M_targetVelocityInTicks);
-    }
-    if(RobotContainer.XboxControl.getAButtonReleased()){
+    }else if(RobotContainer.XboxControl.getAButtonReleased()){
       //set motor output to 0
-      stop();
+      stopCMain();
     }
+
+    if(RobotContainer.XboxControl.getBButtonPressed()){
+      CControl.set(ControlMode.Velocity, M_targetVelocityInTicks);
+    }else if(RobotContainer.XboxControl.getBButtonReleased()){
+      stopCControl();
+    }
+
+  }
+  private void stopCMain(){
+    CMain.set(0);
+  }
+
+  private void stopCControl(){
+    CControl.set(0);
   }
 
   public void stop() {

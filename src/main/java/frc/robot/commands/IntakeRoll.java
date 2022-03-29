@@ -14,6 +14,7 @@ public class IntakeRoll extends CommandBase {
   /** Creates a new IntakeRoll. */
   public IntakeRoll() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
