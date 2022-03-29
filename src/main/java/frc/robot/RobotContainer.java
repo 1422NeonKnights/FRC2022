@@ -14,6 +14,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -28,6 +29,7 @@ public class RobotContainer {
   // Subsystems
   public static final Drivetrain m_drivetrain = new Drivetrain();
   public static final Shooter m_shooter = new Shooter();
+  public static final Intake m_intake = new Intake();
 
   //Joysticks
   public static Joystick controllerLeft = new Joystick(ControllerConstants.CONTROLLER_LEFT);   //0
@@ -38,13 +40,17 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-
     // Configure the button bindings
     configureButtonBindings();
 
-    //TODO: set default drive system
-    m_drivetrain.setDefaultCommand(new TankDrive());
-    //m_drivetrain.setDefaultCommand(new ArcadeDrive());
+    if(controllerLeft.isConnected() && controllerRight.isConnected()){
+      m_drivetrain.setDefaultCommand(new TankDrive());
+    }else if(controllerLeft.isConnected() && !controllerRight.isConnected()){
+      m_drivetrain.setDefaultCommand(new ArcadeDrive());
+    }else{
+      System.out.print("no controllers");
+      System.exit(0);
+    }
     m_shooter.setDefaultCommand(new Shoot());
   }
 

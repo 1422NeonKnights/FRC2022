@@ -49,6 +49,20 @@ public final class Constants {
         public static final double M_kF = 11/6000 * M_targetVelocity;
     }
 
+    public class IntakeConstants{
+        //Talon id
+        public static final int INTAKEMAIN = 9;
+
+        //speed
+        public static final double speedPercent = 0.87;
+
+        //PIDF
+        public static final double C_kP = 0.175;
+        public static final double C_kI = 0.00;
+        public static final double C_kD = 0;
+        public static final double C_kF = 0.135;
+    }
+
     public class ControllerConstants{
         //Joysticks drive
         public static final int CONTROLLER_LEFT = 0;
