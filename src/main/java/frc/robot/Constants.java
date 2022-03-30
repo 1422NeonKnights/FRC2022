@@ -35,18 +35,18 @@ public final class Constants {
         public static final int C_SHOOTER_MAIN_TALON = 8;
 
         //CMain PIDF
-        public static final double targetVelocity = 4000;
+        public static final double mainMotorSpeed = 1;
         public static final double C_kP = 0.175;
         public static final double C_kI = 0.00;
         public static final double C_kD = 0;
-        public static final double C_kF = 12/6052 * targetVelocity;
+        public static final double C_kF = 12/6052 * 4000;
 
         //CControl PIDF
-        public static final double M_targetVelocity = 2000; //TBD
+        public static final double controlMotorSpeed = 4000; //TBD
         public static final double M_kP = 0.155;
         public static final double M_kI = 0.00;
         public static final double M_kD = 0;
-        public static final double M_kF = 11/6000 * M_targetVelocity;
+        public static final double M_kF = 11/6000 * 4000;
     }
 
     public class IntakeConstants{
@@ -54,7 +54,7 @@ public final class Constants {
         public static final int INTAKEMAIN = 11;
 
         //speed
-        public static final double speedPercent = 1;
+        public static final double speedPercent = 0.76;
 
         //PIDF
         public static final double C_kP = 0.175;

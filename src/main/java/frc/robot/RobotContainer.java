@@ -10,13 +10,17 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.IntakeRoll;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.AutonomousCommands.DriveForTime;
+import frc.robot.commands.AutonomousCommands.ShootForTime;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -63,7 +67,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return command;
+    return new SequentialCommandGroup(
+      new DriveForTime(m_drivetrain, 0.6, 4),
+      new ShootForTime(m_shooter, ShooterConstants.mainMotorSpeed, ShooterConstants.controlMotorSpeed, 4)
+    );
   }
 }

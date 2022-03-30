@@ -25,24 +25,21 @@ public class Shooter extends SubsystemBase {
     configureTalons();
   }
 
-  public void shoot(double targetVelocity, double M_targetVelocity) {
-    //TODO: set correct equation
-    double targetVelocityInTicks = targetVelocity * 2048.0 / 600.0;
-    double M_targetVelocityInTicks = M_targetVelocity * 2048.0 / 600.0;
+  public void shoot(double mainMotorSpeed, double controlMotorSpeed) {
 
     //update booleans
     //updateToggle();
 
-    if(RobotContainer.XboxControl.getAButtonPressed()){
-      CMain.set(ControlMode.Velocity, targetVelocityInTicks);
-    }else if(RobotContainer.XboxControl.getAButtonReleased()){
+    if(RobotContainer.XboxControl.getLeftTriggerAxis()>0){
+      CMain.set(ControlMode.PercentOutput, mainMotorSpeed);
+    }else if(RobotContainer.XboxControl.getLeftTriggerAxis()==0){
       //set motor output to 0
       stopCMain();
     }
 
-    if(RobotContainer.XboxControl.getBButtonPressed()){
-      CControl.set(ControlMode.Velocity, M_targetVelocityInTicks);
-    }else if(RobotContainer.XboxControl.getBButtonReleased()){
+    if(RobotContainer.XboxControl.getRightTriggerAxis()>0){
+      CControl.set(ControlMode.PercentOutput, mainMotorSpeed);
+    }else if(RobotContainer.XboxControl.getRightTriggerAxis()==0){
       stopCControl();
     }
 
