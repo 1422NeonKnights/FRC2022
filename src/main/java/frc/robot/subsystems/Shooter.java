@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -26,10 +27,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void shoot(double mainMotorSpeed, double controlMotorSpeed) {
-
-    //update booleans
-    //updateToggle();
-
+    //Main motor control
     if(RobotContainer.XboxControl.getLeftTriggerAxis()>0){
       CMain.set(ControlMode.PercentOutput, mainMotorSpeed);
     }else if(RobotContainer.XboxControl.getLeftTriggerAxis()==0){
@@ -37,10 +35,18 @@ public class Shooter extends SubsystemBase {
       stopCMain();
     }
 
+    //Control motor control
     if(RobotContainer.XboxControl.getRightTriggerAxis()>0){
       CControl.set(ControlMode.PercentOutput, mainMotorSpeed);
     }else if(RobotContainer.XboxControl.getRightTriggerAxis()==0){
       stopCControl();
+    }
+
+    //reverse the motors(emergency)
+    if(RobotContainer.XboxControl.getRightBumperPressed()){
+      reverseMotors(true);
+    }else if(RobotContainer.XboxControl.getRightBumperReleased()){
+      reverseMotors(false);
     }
 
   }
@@ -57,16 +63,9 @@ public class Shooter extends SubsystemBase {
     CControl.set(0);
   }
 
-  //toggle algo
-  public void updateToggle() {
-    if(RobotContainer.XboxControl.getAButton()){
-      if(!togglePressed){
-        toggleOn = !toggleOn;
-        togglePressed = true;
-      }
-    }else{
-        togglePressed = false;
-    }
+  private void reverseMotors(boolean status){
+    CControl.setInverted(status);
+    CMain.setInverted(status);
   }
 
   //configure Talons
@@ -76,6 +75,8 @@ public class Shooter extends SubsystemBase {
 
     CControl.configFactoryDefault();
     CMain.configFactoryDefault();
+
+    CControl.setNeutralMode(NeutralMode.Brake);
 
     //PIDF Values
     //CMain

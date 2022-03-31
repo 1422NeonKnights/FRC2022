@@ -24,15 +24,24 @@ public class Intake extends SubsystemBase {
   public void IntakeRoll(double percent){
     if(RobotContainer.XboxControl.getAButtonPressed()){
       intakeMotor.set(ControlMode.PercentOutput, percent);
-    }
-    if(RobotContainer.XboxControl.getAButtonReleased()){
+    }else if(RobotContainer.XboxControl.getAButtonReleased()){
       //set motor output to 0
       stop();
+    }
+
+    if(RobotContainer.XboxControl.getLeftBumperPressed()){
+      reverseMotor(true);
+    }else if(RobotContainer.XboxControl.getLeftBumperReleased()){
+      reverseMotor(false);
     }
   }
 
   public void stop(){
     intakeMotor.set(0);
+  }
+
+  private void reverseMotor(boolean status){
+    intakeMotor.setInverted(status);
   }
 
   public void configureTalons(){
