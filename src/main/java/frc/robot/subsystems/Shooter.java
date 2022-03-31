@@ -29,7 +29,7 @@ public class Shooter extends SubsystemBase {
   public void shoot(double mainMotorSpeed, double controlMotorSpeed) {
     //Main motor control
     if(RobotContainer.XboxControl.getLeftTriggerAxis()>0){
-      CMain.set(ControlMode.PercentOutput, mainMotorSpeed);
+      mainMotorShoot(mainMotorSpeed);
     }else if(RobotContainer.XboxControl.getLeftTriggerAxis()==0){
       //set motor output to 0
       stopCMain();
@@ -37,7 +37,7 @@ public class Shooter extends SubsystemBase {
 
     //Control motor control
     if(RobotContainer.XboxControl.getRightTriggerAxis()>0){
-      CControl.set(ControlMode.PercentOutput, mainMotorSpeed);
+      controlMotorShoot(controlMotorSpeed);
     }else if(RobotContainer.XboxControl.getRightTriggerAxis()==0){
       stopCControl();
     }
@@ -50,6 +50,22 @@ public class Shooter extends SubsystemBase {
     }
 
   }
+
+  //set motor without controller interference
+  public void shootAutonomous(double mMotor, double cMotor){
+    CMain.set(ControlMode.PercentOutput, mMotor);
+    CControl.set(ControlMode.PercentOutput, cMotor);
+  }
+
+  //Main motor control
+  public void mainMotorShoot(double mSpeed){
+    CMain.set(ControlMode.PercentOutput, mSpeed);
+  }
+  //Control motor control
+  public void controlMotorShoot(double cSpeed){
+    CControl.set(ControlMode.PercentOutput, cSpeed);
+  }
+
   private void stopCMain(){
     CMain.set(0);
   }

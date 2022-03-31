@@ -9,8 +9,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.IntakeRoll;
 import frc.robot.commands.Shoot;
@@ -68,8 +68,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return new SequentialCommandGroup(
-      new DriveForTime(m_drivetrain, 0.6, 4),
-      new ShootForTime(m_shooter, ShooterConstants.mainMotorSpeed, ShooterConstants.controlMotorSpeed, 4)
+      new DriveForTime(m_drivetrain, -1, 1),
+      new DriveForTime(m_drivetrain, AutonomousConstants.DRIVE_SPEED, 4),
+      new ShootForTime(m_shooter, AutonomousConstants.CMAIN_SPEED, AutonomousConstants.CCONTROL_SPEED, 4)
     );
   }
 }

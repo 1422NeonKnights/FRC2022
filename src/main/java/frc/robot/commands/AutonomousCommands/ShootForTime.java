@@ -38,13 +38,13 @@ public class ShootForTime extends CommandBase {
       counter++;
     }
 
-    shooter.shoot(mainSpeed, controlSpeed);
+    shooter.shootAutonomous(mainSpeed, controlSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.shoot(0, 0);
+    shooter.shootAutonomous(0, 0);
   }
 
   // Returns true when the command should end.

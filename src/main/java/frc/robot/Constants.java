@@ -11,6 +11,9 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
+
+
+ //all speed should be in percent
 public final class Constants {
     public class DriveConstants {
         //Drive Motors
@@ -72,6 +75,12 @@ public final class Constants {
         public static final int XBOX_CONTROLLER = 2;
     }
 
+    public class AutonomousConstants{
+        public static final double DRIVE_SPEED = 0.87;
+        public static final double CMAIN_SPEED = 1;
+        public static final double CCONTROL_SPEED = 1;
+        
+    }
     public class UtilConstants{
         public static final int CAMERA_FPS = 8;
     }
