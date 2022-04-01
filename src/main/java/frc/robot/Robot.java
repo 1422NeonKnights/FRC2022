@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.UtilConstants;
-import frc.robot.subsystems.Telemetry;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -19,8 +18,6 @@ import frc.robot.subsystems.Telemetry;
 public class Robot extends TimedRobot {
   
   private Command m_autonomousCommand;
-  
-  public static Telemetry m_telemetry;
 
   private RobotContainer m_robotContainer;
 
@@ -32,7 +29,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_telemetry = new Telemetry();//must be before every subsystem
 
     m_robotContainer = new RobotContainer();
        //init USBcamera
@@ -62,7 +58,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    Robot.m_telemetry.update();
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
@@ -79,7 +74,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    Robot.m_telemetry.update();
   }
 
   @Override
@@ -96,7 +90,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    Robot.m_telemetry.update();
   }
 
   @Override
