@@ -55,7 +55,7 @@ public class Drivetrain extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  //TODO: check if it works
+  //cap the speed to DriveConstatns.MAX_SPEED
   public double speedCheck(double speed){
     if(speed >= DriveConstants.MAX_SPEED){
       return DriveConstants.MAX_SPEED;
