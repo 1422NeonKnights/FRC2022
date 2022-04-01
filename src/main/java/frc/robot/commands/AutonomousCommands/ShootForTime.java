@@ -5,26 +5,32 @@
 package frc.robot.commands.AutonomousCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
 public class ShootForTime extends CommandBase {
-  private final Shooter shooter;
+  Shooter shooter = RobotContainer.m_shooter;
+  Intake intake = RobotContainer.m_intake;
+
   private final double mainSpeed;
   private final double controlSpeed;
+  private final double intakeSpeed;
 
   private int counter = 0;
   private int target = 0;
   /** Creates a new ShootForTime. */
-  public ShootForTime(Shooter shooter, double mainSpeed, double controlSpeed, double seconds) {
-    this.shooter = shooter;
+  public ShootForTime(double mainSpeed, double controlSpeed, double intakeSpeed, double seconds) {
     this.mainSpeed = mainSpeed;
     this.controlSpeed = controlSpeed;
+    this.intakeSpeed = intakeSpeed;
 
     //Convert time in seconds to robot cycle(50 cycles/s)
     target = (int)(seconds * 50);
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
+    addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
@@ -39,12 +45,14 @@ public class ShootForTime extends CommandBase {
     }
 
     shooter.shootAutonomous(mainSpeed, controlSpeed);
+    intake.AutunomousIntake(intakeSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     shooter.shootAutonomous(0, 0);
+    intake.AutunomousIntake(0);
   }
 
   // Returns true when the command should end.

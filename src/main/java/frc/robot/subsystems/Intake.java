@@ -35,6 +35,9 @@ public class Intake extends SubsystemBase {
       reverseMotor(false);
     }
   }
+  public void AutunomousIntake(double speed){
+    intakeMotor.set(ControlMode.PercentOutput, speed);
+  }
 
   public void stop(){
     intakeMotor.set(0);
