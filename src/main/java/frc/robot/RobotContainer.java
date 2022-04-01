@@ -71,7 +71,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return new SequentialCommandGroup(
       new DriveForTime(m_drivetrain, -0.87, 0.3),
-      new DriveForTime(m_drivetrain, AutonomousConstants.DRIVE_SPEED, 1.2),
+      new DriveForTime(m_drivetrain, AutonomousConstants.DRIVE_SPEED, 1),
       new ShootForTime(ShooterConstants.mainMotorSpeed, 
                         ShooterConstants.controlMotorSpeed, 
                         IntakeConstants.speedPercent,

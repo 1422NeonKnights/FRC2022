@@ -40,11 +40,12 @@ public class ShootForTime extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //shooter runs first
+    shooter.shootAutonomous(mainSpeed, controlSpeed);
     if(counter < target){
       counter++;
     }
-
-    shooter.shootAutonomous(mainSpeed, controlSpeed);
+    //speeds the intake for teh ball to go up
     intake.AutunomousIntake(intakeSpeed);
   }
 
