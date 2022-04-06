@@ -76,7 +76,7 @@ public final class Constants {
     }
 
     public class AutonomousConstants{
-        public static final double DRIVE_SPEED = 0.87;
+        public static final double DRIVE_SPEED = 0.67;
         public static final double CMAIN_SPEED = 1;
         public static final double CCONTROL_SPEED = 1;
         

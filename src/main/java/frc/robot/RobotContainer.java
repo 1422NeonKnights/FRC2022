@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.IntakeRoll;
 import frc.robot.commands.Shoot;
+//import frc.robot.commands.TankDrive;
 import frc.robot.commands.AutonomousCommands.DriveForTime;
 import frc.robot.commands.AutonomousCommands.ShootForTime;
 import frc.robot.subsystems.Drivetrain;
@@ -50,6 +50,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     m_drivetrain.setDefaultCommand(new ArcadeDrive());
+    //m_drivetrain.setDefaultCommand(new TankDrive());
 
     m_shooter.setDefaultCommand(new Shoot());
     m_intake.setDefaultCommand(new IntakeRoll());
@@ -70,13 +71,11 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return new SequentialCommandGroup(
-      new DriveForTime(m_drivetrain, -0.87, 0.3),
-      new DriveForTime(m_drivetrain, AutonomousConstants.DRIVE_SPEED, 1),
-      new ShootForTime(ShooterConstants.mainMotorSpeed, 
-                        ShooterConstants.controlMotorSpeed, 
-                        IntakeConstants.speedPercent,
-                        3),
-      new DriveForTime(m_drivetrain, -0.6, 2)
+      //new DriveForTime(m_drivetrain, -0.87, 0.6),
+      //new DriveForTime(m_drivetrain, AutonomousConstants.DRIVE_SPEED, 1),
+      //new ShootForTime(AutonomousConstants.CMAIN_SPEED, AutonomousConstants.CCONTROL_SPEED, IntakeConstants.speedPercent, 1.5),
+      //new DriveForTime(m_drivetrain, -0.6, 4)
     );
   }
 }
+ 

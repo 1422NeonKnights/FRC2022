@@ -35,18 +35,20 @@ public class ShootForTime extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     //shooter runs first
-    shooter.shootAutonomous(mainSpeed, controlSpeed);
+    intake.AutunomousIntake(intakeSpeed);
+    shooter.mainMotorShoot(mainSpeed);
     if(counter < target){
       counter++;
     }
     //speeds the intake for teh ball to go up
-    intake.AutunomousIntake(intakeSpeed);
+    shooter.controlMotorShoot(controlSpeed);
   }
 
   // Called once the command ends or is interrupted.

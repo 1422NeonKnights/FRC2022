@@ -5,6 +5,8 @@
 package frc.robot.commands.AutonomousCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Drivetrain;
 
 //Drives the robot for a set period of time
@@ -28,6 +30,7 @@ public class DriveForTime extends CommandBase {
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
+    addRequirements(RobotContainer.m_shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -40,7 +43,7 @@ public class DriveForTime extends CommandBase {
     if(counter < target){
       counter++;
     }
-
+    RobotContainer.m_shooter.mainMotorShoot(ShooterConstants.mainMotorSpeed);
     drivetrain.arcadeDrive(speed, 0);
   }
 
