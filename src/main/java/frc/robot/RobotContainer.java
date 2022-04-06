@@ -71,10 +71,10 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return new SequentialCommandGroup(
-      //new DriveForTime(m_drivetrain, -0.87, 0.6),
-      //new DriveForTime(m_drivetrain, AutonomousConstants.DRIVE_SPEED, 1),
-      //new ShootForTime(AutonomousConstants.CMAIN_SPEED, AutonomousConstants.CCONTROL_SPEED, IntakeConstants.speedPercent, 1.5),
-      //new DriveForTime(m_drivetrain, -0.6, 4)
+      new DriveForTime(m_drivetrain, -0.87, 0.6),
+      new DriveForTime(m_drivetrain, AutonomousConstants.DRIVE_SPEED, 1),
+      new ShootForTime(AutonomousConstants.CMAIN_SPEED, AutonomousConstants.CCONTROL_SPEED, IntakeConstants.speedPercent, 1.5),
+      new DriveForTime(m_drivetrain, -0.6, 4)
     );
   }
 }
