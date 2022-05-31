@@ -47,7 +47,7 @@ public class Drivetrain extends SubsystemBase {
 
   //using only one controller
   public void arcadeDrive(double moveSpeed, double rotateSpeed){
-    differentialDrive.arcadeDrive(speedCheck(moveSpeed), rotateSpeed);
+    differentialDrive.arcadeDrive(speedCheck(moveSpeed), speedCheck(rotateSpeed));
   }
   
   @Override
@@ -59,6 +59,8 @@ public class Drivetrain extends SubsystemBase {
   public double speedCheck(double speed){
     if(speed >= DriveConstants.MAX_SPEED){
       return DriveConstants.MAX_SPEED;
+    }else if(speed <= -(DriveConstants.MAX_SPEED)){
+      return -DriveConstants.MAX_SPEED;
     }else{
       return speed;
     }

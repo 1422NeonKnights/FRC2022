@@ -23,13 +23,14 @@ public final class Constants {
         public static final int DRIVETRAIN_RIGHT_BACK_TALON = 5;
 
         //Speed in percentage
-        public static final double MAX_SPEED = 0.87;
+        public static final double MAX_SPEED = 0.65;
+        public static final double TILT_CAP = 0.60;
         
         //Drive PIDF
-        public static final double kP = 0.1125;
+        public static final double kP = 0.175;
         public static final double kI = 0.0001;
         public static final double kD = 0.00;
-        public static final double kF = 0.052;
+        public static final double kF = 12/6052 * 4000;
     }
 
     public class ShooterConstants{
@@ -39,10 +40,10 @@ public final class Constants {
 
         //CMain PIDF
         public static final double mainMotorSpeed = 1;
-        public static final double C_kP = 0.175;
+        public static final double C_kP = 0.155;
         public static final double C_kI = 0.00;
         public static final double C_kD = 0;
-        public static final double C_kF = 12/6052 * 4000;
+        public static final double C_kF = 11/6000 * 4000;
 
         //CControl PIDF
         public static final double controlMotorSpeed = 4000; //TBD
