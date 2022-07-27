@@ -68,6 +68,7 @@ public final class Constants {
     }
 
     public class ControllerConstants{
+        //MAKE SURE THIS IS CORRECT IN THE DRIVER STATION
         //Joysticks drive
         public static final int CONTROLLER_LEFT = 0;
         public static final int CONTROLLER_RIGHT = 1;

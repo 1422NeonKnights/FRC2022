@@ -9,15 +9,15 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.Constants.AutonomousConstants;
+// import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.Constants.IntakeConstants;
+// import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.IntakeRoll;
 import frc.robot.commands.Shoot;
-//import frc.robot.commands.TankDrive;
-import frc.robot.commands.AutonomousCommands.DriveForTime;
-import frc.robot.commands.AutonomousCommands.ShootForTime;
+import frc.robot.commands.TankDrive;
+// import frc.robot.commands.AutonomousCommands.DriveForTime;
+// import frc.robot.commands.AutonomousCommands.ShootForTime;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -49,10 +49,21 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    m_drivetrain.setDefaultCommand(new ArcadeDrive());
-    //m_drivetrain.setDefaultCommand(new TankDrive());
+    //detect which drive train to use depending on connected controllers.
+    //TODO: Test this out, not complete
+    if((controllerLeft.isConnected() && !controllerLeft.isConnected())
+    ||(controllerRight.isConnected() && !controllerRight.isConnected())){
+      m_drivetrain.setDefaultCommand(new ArcadeDrive());
+    }else if(controllerRight.isConnected() && controllerLeft.isConnected()){
+      m_drivetrain.setDefaultCommand(new TankDrive());
+    }
 
+    //TODO:if above command does not work, us this code below and delete the above one
+    //m_drivetrain.setDefaultCommand(new ArcadeDrive());
+
+    //build shooter commands
     m_shooter.setDefaultCommand(new Shoot());
+    //build intake commands
     m_intake.setDefaultCommand(new IntakeRoll());
   }
 
@@ -71,10 +82,13 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return new SequentialCommandGroup(
-      new DriveForTime(m_drivetrain, -0.87, 0.6),
-      new DriveForTime(m_drivetrain, AutonomousConstants.DRIVE_SPEED, 1),
-      new ShootForTime(AutonomousConstants.CMAIN_SPEED, AutonomousConstants.CCONTROL_SPEED, IntakeConstants.speedPercent, 1.5),
-      new DriveForTime(m_drivetrain, -0.6, 4)
+      //write autonoous code
+  
+      //TODO: Make a BETTER autonomous
+      // new DriveForTime(m_drivetrain, -0.87, 0.6),
+      // new DriveForTime(m_drivetrain, AutonomousConstants.DRIVE_SPEED, 1),
+      // new ShootForTime(AutonomousConstants.CMAIN_SPEED, AutonomousConstants.CCONTROL_SPEED, IntakeConstants.speedPercent, 1.5),
+      // new DriveForTime(m_drivetrain, -0.6, 4)
     );
   }
 }
