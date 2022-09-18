@@ -5,7 +5,6 @@
 package frc.robot;
 
 //import java.sql.Driver;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -49,17 +48,8 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    //detect which drive train to use depending on connected controllers.
-    //TODO: Test this out, not complete
-    if((controllerLeft.isConnected() && !controllerLeft.isConnected())
-    ||(controllerRight.isConnected() && !controllerRight.isConnected())){
-      m_drivetrain.setDefaultCommand(new ArcadeDrive());
-    }else if(controllerRight.isConnected() && controllerLeft.isConnected()){
-      m_drivetrain.setDefaultCommand(new TankDrive());
-    }
-
-    //TODO:if above command does not work, us this code below and delete the above one
-    //m_drivetrain.setDefaultCommand(new ArcadeDrive());
+    //Drive type
+    m_drivetrain.setDefaultCommand(new ArcadeDrive());
 
     //build shooter commands
     m_shooter.setDefaultCommand(new Shoot());
