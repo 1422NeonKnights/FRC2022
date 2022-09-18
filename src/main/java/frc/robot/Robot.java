@@ -4,11 +4,9 @@
 
 package frc.robot;
 
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants.UtilConstants;
 import frc.robot.subsystems.Telemetry;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -17,7 +15,7 @@ import frc.robot.subsystems.Telemetry;
  * project.
  */
 public class Robot extends TimedRobot {
-
+  
   private static Telemetry m_telemetry;
   
   private Command m_autonomousCommand;
@@ -36,9 +34,6 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     m_telemetry = new Telemetry();
-    //init USBcamera
-    CameraServer.startAutomaticCapture().setResolution(200, 200);
-    CameraServer.startAutomaticCapture().setFPS(UtilConstants.CAMERA_FPS);
   }
 
   /**
@@ -96,6 +91,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+
   }
 
   @Override

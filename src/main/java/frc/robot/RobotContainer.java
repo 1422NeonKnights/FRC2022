@@ -11,10 +11,8 @@ import edu.wpi.first.wpilibj.XboxController;
 // import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.ControllerConstants;
 // import frc.robot.Constants.IntakeConstants;
-import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.IntakeRoll;
 import frc.robot.commands.Shoot;
-import frc.robot.commands.TankDrive;
 // import frc.robot.commands.AutonomousCommands.DriveForTime;
 // import frc.robot.commands.AutonomousCommands.ShootForTime;
 import frc.robot.subsystems.Drivetrain;
@@ -47,9 +45,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-
-    //Drive type
-    m_drivetrain.setDefaultCommand(new ArcadeDrive());
 
     //build shooter commands
     m_shooter.setDefaultCommand(new Shoot());
