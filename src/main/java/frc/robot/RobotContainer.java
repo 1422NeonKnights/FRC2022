@@ -15,7 +15,6 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.IntakeRoll;
 import frc.robot.commands.Shoot;
-import frc.robot.commands.TankDrive;
 // import frc.robot.commands.AutonomousCommands.DriveForTime;
 // import frc.robot.commands.AutonomousCommands.ShootForTime;
 import frc.robot.subsystems.Drivetrain;
@@ -51,13 +50,7 @@ public class RobotContainer {
 
     //detect which drive train to use depending on connected controllers.
     //TODO: Test this out, not complete
-    if((controllerLeft.isConnected() && !controllerLeft.isConnected())
-    ||(controllerRight.isConnected() && !controllerRight.isConnected())){
       m_drivetrain.setDefaultCommand(new ArcadeDrive());
-    }else if(controllerRight.isConnected() && controllerLeft.isConnected()){
-      m_drivetrain.setDefaultCommand(new TankDrive());
-    }
-
     //TODO:if above command does not work, us this code below and delete the above one
     //m_drivetrain.setDefaultCommand(new ArcadeDrive());
 
