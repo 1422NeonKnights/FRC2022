@@ -10,7 +10,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.TankDrive;
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
@@ -52,7 +55,17 @@ public class Drivetrain extends SubsystemBase {
   
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    //TODO: HOPEFULLY THIS SHIT WORKS
+    if(RobotContainer.controllerLeft.isConnected() && RobotContainer.controllerRight.isConnected()){
+      setDefaultCommand(new TankDrive());
+    }else if(RobotContainer.controllerLeft.isConnected() || RobotContainer.controllerRight.isConnected()){
+      setDefaultCommand(new ArcadeDrive());
+    }
+  }
+
+  //Preferences
+  public double getDriveSpeed(){
+    return -RobotContainer.controllerLeft.getY();
   }
 
   //cap the speed to DriveConstatns.MAX_SPEED
