@@ -7,9 +7,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class XboxDrive extends CommandBase {
-  /** Creates a new XboxDrive. */
-  public XboxDrive() {
+public class AxisDrive extends CommandBase {
+  /** Creates a new ArcadeDrive. */
+  public AxisDrive() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_drivetrain);
   }
@@ -21,8 +21,8 @@ public class XboxDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double moveSpeed = -RobotContainer.XboxControl.getLeftY();
-    double rotateSpeed = -RobotContainer.XboxControl.getRightX();
+    double moveSpeed = -RobotContainer.controllerLeft.getY();
+    double rotateSpeed = -RobotContainer.controllerRight.getX();
 
     RobotContainer.m_drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
   }

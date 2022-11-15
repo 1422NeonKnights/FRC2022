@@ -47,7 +47,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-
     //detect which drive train to use depending on connected controllers.
     //TODO: Test this out, not complete
     m_drivetrain.setDefaultCommand(new XboxDrive());
