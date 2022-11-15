@@ -17,13 +17,13 @@ package frc.robot;
 public final class Constants {
     public class DriveConstants {
         //Drive Motors
-        public static final int DRIVETRAIN_LEFT_BACK_TALON = 6;  //2
-        public static final int DRIVETRAIN_LEFT_FRONT_TALON = 9; //3
-        public static final int DRIVETRAIN_RIGHT_FRONT_TALON = 8; //4
-        public static final int DRIVETRAIN_RIGHT_BACK_TALON = 9; //5
+        public static final int DRIVETRAIN_LEFT_BACK_TALON = 2;  //2
+        public static final int DRIVETRAIN_LEFT_FRONT_TALON = 3; //3
+        public static final int DRIVETRAIN_RIGHT_FRONT_TALON = 4; //4
+        public static final int DRIVETRAIN_RIGHT_BACK_TALON = 5; //5
 
         //Speed in percentage
-        public static final double MAX_SPEED = 0.90;
+        public static final double MAX_SPEED = 0.87;
         public static final double TILT_CAP = MAX_SPEED-0.07
         ;
         
