@@ -50,7 +50,6 @@ public class Drivetrain extends SubsystemBase {
   public void arcadeDrive(double moveSpeed, double rotateSpeed){
     differentialDrive.arcadeDrive(speedCheck(moveSpeed), speedCheck(rotateSpeed));
   }
-  
 
   //Preferences
   public double getDriveSpeed(){
@@ -87,10 +86,10 @@ public class Drivetrain extends SubsystemBase {
      _rightFollow.setNeutralMode(NeutralMode.Brake);
                              
      /* Configure output direction */
-     _leftLead.setInverted(true);
+     _leftLead.setInverted(false);
      _rightLead.setInverted(false);
      _leftFollow.setInverted(true);
-     _rightFollow.setInverted(false);
+     _rightFollow.setInverted(true);
  
      //configure PIDF values
      _leftLead.config_kP(0, DriveConstants.kP);

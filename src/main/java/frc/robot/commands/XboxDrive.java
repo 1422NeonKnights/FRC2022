@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
 public class XboxDrive extends CommandBase {
-  /** Creates a new ArcadeDrive. */
+  /** Creates a new XboxDrive. */
   public XboxDrive() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_drivetrain);

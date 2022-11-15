@@ -10,11 +10,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 // import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.commands.ArcadeDrive;
+//import frc.robot.commands.ArcadeDrive;
 // import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.IntakeRoll;
 import frc.robot.commands.Shoot;
-//import frc.robot.commands.TankDrive;
+import frc.robot.commands.XboxDrive;
 // import frc.robot.commands.AutonomousCommands.DriveForTime;
 // import frc.robot.commands.AutonomousCommands.ShootForTime;
 import frc.robot.subsystems.Drivetrain;
@@ -47,15 +47,10 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-
-
     //detect which drive train to use depending on connected controllers.
     //TODO: Test this out, not complete
-      m_drivetrain.setDefaultCommand(new ArcadeDrive());
-    //TODO:if above command does not work, us this code below and delete the above one
-    //m_drivetrain.setDefaultCommand(new ArcadeDrive());
+    m_drivetrain.setDefaultCommand(new XboxDrive());
 
-    //build shooter commands
     m_shooter.setDefaultCommand(new Shoot());
     //build intake commands
     m_intake.setDefaultCommand(new IntakeRoll());
