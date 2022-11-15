@@ -25,7 +25,7 @@ public class Drivetrain extends SubsystemBase {
   MotorControllerGroup leftMotors;
   MotorControllerGroup rightMotors;
 
-  //differenctial drive
+  //differential drive
   DifferentialDrive differentialDrive;
 
   public Drivetrain() {
