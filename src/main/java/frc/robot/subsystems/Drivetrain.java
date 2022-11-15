@@ -12,9 +12,6 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.TankDrive;
-
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
   //motorcontrollers
@@ -53,15 +50,15 @@ public class Drivetrain extends SubsystemBase {
     differentialDrive.arcadeDrive(speedCheck(moveSpeed), speedCheck(rotateSpeed));
   }
   
-  @Override
-  public void periodic() {
-    //TODO: HOPEFULLY THIS SHIT WORKS
-    if(RobotContainer.controllerLeft.isConnected() && RobotContainer.controllerRight.isConnected()){
-      setDefaultCommand(new TankDrive());
-    }else if(RobotContainer.controllerLeft.isConnected() || RobotContainer.controllerRight.isConnected()){
-      setDefaultCommand(new ArcadeDrive());
-    }
-  }
+  // @Override
+  // public void periodic() {
+  //   //TODO: HOPEFULLY THIS SHIT WORKS
+  //   if(RobotContainer.controllerLeft.isConnected() && RobotContainer.controllerRight.isConnected()){
+  //     setDefaultCommand(new TankDrive());
+  //   }else if(RobotContainer.controllerLeft.isConnected() || RobotContainer.controllerRight.isConnected()){
+  //     setDefaultCommand(new ArcadeDrive());
+  //   }
+  // }
 
   //Preferences
   public double getDriveSpeed(){
