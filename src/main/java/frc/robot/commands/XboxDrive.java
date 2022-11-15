@@ -22,7 +22,7 @@ public class XboxDrive extends CommandBase {
   @Override
   public void execute() {
     double moveSpeed = RobotContainer.XboxControl.getLeftY();
-    double rotateSpeed = -RobotContainer.XboxControl.getRightX();
+    double rotateSpeed = RobotContainer.XboxControl.getRightX();
 
     RobotContainer.m_drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
   }
